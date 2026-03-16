@@ -139,30 +139,13 @@
       font-weight: 600;
       letter-spacing: 0.04em;
     }
-    .pill-purple { background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.35); color: #93c5fd; }
-    .pill-cyan   { background: rgba(37,99,235,0.10); border: 1px solid rgba(59,130,246,0.25); color: #bfdbfe; }
-    .pill-amber  { background: rgba(71,85,105,0.2);  border: 1px solid rgba(100,116,139,0.4); color: #cbd5e1; }
-    .pill-green  { background: rgba(71,85,105,0.15); border: 1px solid rgba(100,116,139,0.3); color: #e2e8f0; }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--muted);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      animation: bounce 2s infinite;
-    }
-    .scroll-hint svg { width: 20px; opacity: 0.5; }
-    @keyframes bounce {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50%      { transform: translateX(-50%) translateY(8px); }
+    .pill-purple,
+    .pill-cyan,
+    .pill-amber,
+    .pill-green {
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      color: #93c5fd;
     }
 
     @keyframes fadeUp {
@@ -291,7 +274,7 @@
       font-size: 0.84rem;
     }
     thead tr {
-      background: rgba(124,58,237,0.12);
+      background: rgba(59,130,246,0.08);
     }
     thead th {
       padding: 0.9rem 1.1rem;
@@ -367,7 +350,6 @@
       gap: 1.5rem;
       align-items: flex-start;
     }
-    .certif-box .big-icon { font-size: 2.5rem; flex-shrink: 0; }
     .certif-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
     .certif-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
 
@@ -409,16 +391,8 @@
     }
 
     /* color helpers */
-    .c-purple { color: #93c5fd; }
-    .c-cyan   { color: #bfdbfe; }
-    .c-amber  { color: #cbd5e1; }
-    .c-green  { color: #e2e8f0; }
-    .c-rose   { color: #94a3b8; }
-
-    .bg-purple { background: rgba(37,99,235,0.15); }
-    .bg-cyan   { background: rgba(59,130,246,0.12); }
-    .bg-amber  { background: rgba(71,85,105,0.2); }
-    .bg-green  { background: rgba(71,85,105,0.15); }
+    .c-purple, .c-cyan, .c-amber, .c-green, .c-rose { color: #93c5fd; }
+    .bg-purple, .bg-cyan, .bg-amber, .bg-green { background: rgba(59,130,246,0.12); }
   </style>
 </head>
 <body>
@@ -450,10 +424,6 @@
     <span class="pill pill-cyan">48 Semanas</span>
     <span class="pill pill-amber">144 Aulas ao Vivo</span>
     <span class="pill pill-green">Certificação por Portfólio</span>
-  </div>
-  <div class="scroll-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-    scroll
   </div>
 </section>
 
@@ -532,15 +502,15 @@
       </h3>
       <div style="display:flex;flex-direction:column;gap:0.8rem;font-size:0.86rem;">
         <div style="display:flex;gap:0.75rem;align-items:flex-start;">
-          <span style="background:rgba(124,58,237,0.2);border-radius:6px;padding:0.2rem 0.6rem;font-weight:700;color:#c4b5fd;white-space:nowrap;">15–20 min</span>
+          <span style="background:rgba(59,130,246,0.12);border-radius:4px;padding:0.2rem 0.6rem;font-weight:700;color:#93c5fd;white-space:nowrap;font-size:0.8rem;">15–20 min</span>
           <span style="color:var(--muted);line-height:1.55;"><strong style="color:var(--text)">Contexto:</strong> o instrutor explica o que será construído, por que aquilo importa e como se conecta ao que já foi aprendido.</span>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:flex-start;">
-          <span style="background:rgba(6,182,212,0.15);border-radius:6px;padding:0.2rem 0.6rem;font-weight:700;color:#67e8f9;white-space:nowrap;">50–60 min</span>
+          <span style="background:rgba(59,130,246,0.12);border-radius:4px;padding:0.2rem 0.6rem;font-weight:700;color:#93c5fd;white-space:nowrap;font-size:0.8rem;">50–60 min</span>
           <span style="color:var(--muted);line-height:1.55;"><strong style="color:var(--text)">Prática:</strong> o instrutor constrói ao vivo e os alunos acompanham, replicando cada passo na própria tela.</span>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:flex-start;">
-          <span style="background:rgba(16,185,129,0.13);border-radius:6px;padding:0.2rem 0.6rem;font-weight:700;color:#6ee7b7;white-space:nowrap;">10–15 min</span>
+          <span style="background:rgba(59,130,246,0.12);border-radius:4px;padding:0.2rem 0.6rem;font-weight:700;color:#93c5fd;white-space:nowrap;font-size:0.8rem;">10–15 min</span>
           <span style="color:var(--muted);line-height:1.55;"><strong style="color:var(--text)">Revisão:</strong> revisão do que foi construído, dúvidas e orientação sobre a próxima aula.</span>
         </div>
       </div>
