@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jovem Builder – Proposta</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --card: #f1f5f9;
+      --accent: #1d4ed8;
+      --accent2: #2563eb;
+      --text: #0f172a;
+      --muted: #475569;
+      --subtle: #64748b;
+      --border: rgba(37,99,235,0.12);
+      --border-solid: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── PROGRESS BAR ── */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--accent2);
+      z-index: 1000;
+      transition: width 0.1s;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 2px; left: 0; right: 0;
+      height: 56px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 999;
+    }
+    nav .logo {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav a {
+      color: var(--subtle);
+      text-decoration: none;
+      font-size: 0.73rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent2); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      padding: 100px 1.5rem 80px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      max-width: 100%;
+      background: var(--bg);
+      padding-top: 56px;
+      border-bottom: 1px solid var(--border-solid);
+    }
+    #hero .org {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+    #hero .presents {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+    #hero h1 {
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+    #hero .tagline {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 0.45rem 1.2rem;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .section-title {
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .section-title span { color: var(--accent2); }
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--accent2);
+      border-radius: 1px;
+      margin-bottom: 1.5rem;
+      opacity: 0.6;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 720px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── SEPARATOR ── */
+    .sep {
+      border: none;
+      height: 1px;
+      background: var(--border-solid);
+      margin: 0 auto 4rem;
+      max-width: 800px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border-solid);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+      border-color: rgba(37,99,235,0.25);
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.7rem;
+    }
+    .card p, .card li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight {
+      background: #eff6ff;
+      border: 1px solid rgba(37,99,235,0.2);
+      border-left: 3px solid var(--accent2);
+      border-radius: 8px;
+      padding: 1.4rem 1.8rem;
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+    }
+    .highlight strong { color: var(--text); }
+
+    /* ── LEMA ── */
+    .lema {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 10px;
+      padding: 1.8rem 2.2rem;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+
+    /* ── AUDIENCE ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 600px) { .audience-grid { grid-template-columns: 1fr; } }
+    .audience-card {
+      border-radius: 10px;
+      padding: 1.6rem;
+      border: 1px solid var(--border-solid);
+    }
+    .audience-card.comprador { background: #eff6ff; border-color: rgba(37,99,235,0.2); }
+    .audience-card.usuario   { background: #f8fafc; }
+    .audience-card .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.7rem; color: var(--text); }
+    .audience-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── PHASE TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .phase {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--border-solid);
+    }
+    .phase:last-child { border-bottom: none; }
+    .phase-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .phase-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .phase-content p  { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PLANS ── */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    @media (max-width: 700px) { .plans-grid { grid-template-columns: 1fr; } }
+    .plan-card {
+      border: 1px solid var(--border-solid);
+      border-radius: 12px;
+      padding: 2rem 1.6rem;
+      position: relative;
+    }
+    .plan-card.featured {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .plan-card .plan-badge {
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .plan-card.featured .plan-badge { color: rgba(255,255,255,0.7); }
+    .plan-card:not(.featured) .plan-badge { color: var(--accent2); }
+    .plan-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.7rem; }
+    .plan-card:not(.featured) h3 { color: var(--text); }
+    .plan-card p { font-size: 0.87rem; line-height: 1.65; }
+    .plan-card.featured p { color: rgba(255,255,255,0.85); }
+    .plan-card:not(.featured) p { color: var(--muted); }
+    .plan-rec {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* ── WORKSHOP STRUCTURE ── */
+    .workshop-steps { display: flex; flex-direction: column; gap: 0; }
+    .ws-step {
+      display: flex;
+      gap: 1.2rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border-solid);
+      align-items: flex-start;
+    }
+    .ws-step:last-child { border-bottom: none; }
+    .ws-step .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent2);
+      flex-shrink: 0;
+      margin-top: 0.5rem;
+    }
+    .ws-step p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+    .ws-step strong { color: var(--text); }
+
+    /* ── CHANNELS ── */
+    .channel-list { display: flex; flex-direction: column; gap: 0; }
+    .channel-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border-solid);
+    }
+    .channel-item:last-child { border-bottom: none; }
+    .channel-name {
+      width: 100px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent2);
+      flex-shrink: 0;
+      padding-top: 0.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .channel-item p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── CONTENT LIST ── */
+    .content-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .content-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .content-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent2);
+      flex-shrink: 0;
+      margin-top: 0.5rem;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-item {
+      background: var(--card);
+      border: 1px solid var(--border-solid);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-item .num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent2);
+      line-height: 1;
+    }
+    .stat-item .lbl {
+      font-size: 0.75rem;
+      color: var(--subtle);
+      margin-top: 0.3rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border-solid);
+      color: var(--subtle);
+      font-size: 0.78rem;
+    }
+    footer strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <span class="logo">Jovem Builder</span>
+  <ul>
+    <li><a href="#visao">Visão</a></li>
+    <li><a href="#posicionamento">Posicionamento</a></li>
+    <li><a href="#publico">Público</a></li>
+    <li><a href="#pedagogia">Pedagógico</a></li>
+    <li><a href="#lancamento">Lançamento</a></li>
+    <li><a href="#workshop">Workshop</a></li>
+    <li><a href="#campanha">Campanha</a></li>
+    <li><a href="#planos">Planos</a></li>
+  </ul>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <p class="org">Cultura Builder</p>
+  <p class="presents">apresenta</p>
+  <h1>JOVEM<br>BUILDER</h1>
+  <p class="tagline">Formando a primeira geração de construtores de IA da América Latina</p>
+  <span class="hero-badge">Proposta do Programa</span>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 1. VISÃO GERAL ════ -->
+<section id="visao">
+  <div class="reveal">
+    <p class="section-label">01 — Visão Geral</p>
+    <h2 class="section-title">Visão Geral <span>do Projeto</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">
+      O Jovem Builder nasce como uma nova frente do Cultura Builder com uma proposta clara: formar adolescentes para o futuro da Inteligência Artificial de forma séria, prática e profissional.
+    </p>
+  </div>
+
+  <div class="highlight reveal">
+    Trata-se de uma <strong>formação real para jovens entre 12 e 17 anos</strong>, distante de qualquer lógica recreativa ou superficial, com foco em preparo para o mercado, desenvolvimento intelectual, construção de soluções com IA, responsabilidade no uso da tecnologia e visão de longo prazo.
+  </div>
+
+  <div class="highlight reveal">
+    A ideia central do projeto é simples e poderosa: a geração anterior precisou aprender a usar computador e internet. <strong>A próxima geração precisará aprender a construir com Inteligência Artificial.</strong> O Jovem Builder existe para antecipar essa formação e dar aos jovens uma vantagem real, concreta e duradoura.
+  </div>
+
+  <div class="grid-2" style="margin-top:2rem;">
+    <div class="card reveal">
+      <h3>O que o programa forma</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Preparo para o mercado</li>
+        <li>Desenvolvimento intelectual</li>
+        <li>Construção de soluções com IA</li>
+        <li>Responsabilidade no uso da tecnologia</li>
+        <li>Visão de longo prazo</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>A oportunidade histórica</h3>
+      <p>A geração anterior aprendeu a usar computadores e a internet. <strong>A próxima precisará aprender a construir com IA.</strong> O Jovem Builder antecipa essa formação, dando aos jovens uma vantagem real e duradoura antes que o mercado exija.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 2. POSICIONAMENTO ════ -->
+<section id="posicionamento">
+  <div class="reveal">
+    <p class="section-label">02 — Identidade</p>
+    <h2 class="section-title">Posicionamento do <span>Jovem Builder</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="lema reveal">
+    "Formando a primeira geração de construtores de IA da América Latina."
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>O que o programa é</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Formação tecnológica de base</li>
+        <li>Preparação prática para o futuro</li>
+        <li>Ambiente de desenvolvimento de jovens com visão de mercado</li>
+        <li>Espaço de formação de construtores de tecnologia</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>O que o programa não é</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Cursinho</li>
+        <li>Oficina recreativa</li>
+        <li>Passatempo</li>
+        <li>Experiência infantil</li>
+      </ul>
+      <p style="margin-top:0.8rem;font-size:0.84rem;color:var(--muted);">A comunicação, o formato das aulas, a postura dos instrutores e a estrutura do programa precisam refletir a seriedade da proposta.</p>
+    </div>
+  </div>
+
+  <div class="highlight reveal" style="margin-top:1.2rem;">
+    O objetivo é formar jovens que, ainda durante a adolescência, desenvolvam <strong>pensamento tecnológico, clareza de raciocínio, capacidade de construir com IA, disciplina intelectual, visão prática de mercado e responsabilidade no uso da tecnologia.</strong>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 3. PÚBLICO ════ -->
+<section id="publico">
+  <div class="reveal">
+    <p class="section-label">03 — Mercado</p>
+    <h2 class="section-title">Público <span>Comprador e Usuário</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="audience-grid reveal">
+    <div class="audience-card comprador">
+      <div class="label">Público Comprador</div>
+      <h3>Os Pais</h3>
+      <p>O comprador principal são os pais — especialmente aqueles que valorizam educação, pensam no futuro dos filhos, entendem que o mercado está mudando, buscam diferenciais reais de formação e querem preparar seus filhos para além do que a escola tradicional oferece.</p>
+      <p style="margin-top:0.8rem;">Para esses pais, a transformação provocada pela IA já é um fato. O que ainda gera insegurança é saber se o filho estará preparado quando ela chegar com força total ao mercado de trabalho.</p>
+    </div>
+    <div class="audience-card usuario">
+      <div class="label">Público Usuário</div>
+      <h3>Os Jovens (12 a 17 anos)</h3>
+      <p>O usuário final são os jovens, principalmente entre 14 e 17 anos. Esse jovem precisa ser impactado por uma comunicação que desperte curiosidade, identidade, sensação de vanguarda, desejo de estar à frente e vontade de construir algo real.</p>
+      <p style="margin-top:0.8rem;">O jovem que entra no programa precisa sentir que faz parte de algo maior — que está aprendendo algo que a maioria dos adultos ainda não domina.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 4. O PROBLEMA ════ -->
+<section id="problema">
+  <div class="reveal">
+    <p class="section-label">04 — Contexto</p>
+    <h2 class="section-title">O Problema que o <span>Projeto Enxerga</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="highlight reveal">
+    Existe hoje uma lacuna visível entre o que a escola ensina e o que o futuro vai cobrar. A maioria dos jovens aprende a <strong>consumir tecnologia</strong>, mas não aprende a <strong>construir com ela</strong>.
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>O jovem hoje sabe</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Usar aplicativos</li>
+        <li>Navegar em redes sociais</li>
+        <li>Assistir conteúdo</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>O jovem não sabe</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Como a tecnologia funciona por dentro</li>
+        <li>Como sistemas são construídos</li>
+        <li>Como ferramentas são projetadas</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight reveal" style="margin-top:1.2rem;">
+    Os jovens que saírem da adolescência sem nenhuma base real de construção com IA vão encontrar <strong>um mercado que já mudou</strong> — e vão precisar correr atrás de algo que poderia ter sido aprendido anos antes.
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 5. OPORTUNIDADE HISTÓRICA ════ -->
+<section id="oportunidade">
+  <div class="reveal">
+    <p class="section-label">05 — Contexto Histórico</p>
+    <h2 class="section-title">A Oportunidade <span>Histórica</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card reveal">
+      <h3>Computador Pessoal</h3>
+      <p>Quem aprendeu cedo a trabalhar com computadores liderou a primeira onda digital. Quem ignorou, correu atrás.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Internet</h3>
+      <p>O mesmo movimento se repetiu. A vantagem foi de quem entendeu cedo como usar e construir para a web.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Inteligência Artificial</h3>
+      <p>Agora acontece de novo — com <strong>velocidade maior</strong>. A IA está mudando todas as áreas ao mesmo tempo.</p>
+    </div>
+  </div>
+
+  <div class="highlight reveal" style="margin-top:1.2rem;">
+    Quem aprender cedo a construir com IA terá vantagem extrema. O Jovem Builder existe para antecipar essa formação e desenvolver jovens que cheguem ao fim da adolescência com <strong>anos de maturidade tecnológica, portfólio, capacidade de execução e visão de construção.</strong>
+  </div>
+
+  <div class="lema reveal" style="margin-top:1.5rem;">
+    Essa é uma janela histórica — e janelas históricas não esperam.
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 6. PROPOSTA PEDAGÓGICA ════ -->
+<section id="pedagogia">
+  <div class="reveal">
+    <p class="section-label">06 — Formação</p>
+    <h2 class="section-title">Proposta <span>Pedagógica</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">
+      A formação do Jovem Builder une disciplina acadêmica com prática de mercado. O programa precisa ser consistente, conteudista, aplicado e transformador, com uma dinâmica que desafie o aluno de verdade.
+    </p>
+  </div>
+
+  <div class="highlight reveal">
+    A lógica pedagógica segue um caminho claro: <strong>base teórica sólida → aplicação prática → construção de projetos → visão de mercado → desenvolvimento de responsabilidade.</strong> Cada etapa leva o aluno a entender tanto o como quanto o porquê.
+  </div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="card reveal">
+      <h3>O que os alunos aprendem</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Fundamentos da Inteligência Artificial</li>
+        <li>Lógica e pensamento computacional</li>
+        <li>Uso profissional de ferramentas de IA</li>
+        <li>Construção de agentes de IA</li>
+        <li>Automações e integração entre sistemas</li>
+        <li>Construção de ferramentas e visão de produto</li>
+        <li>Resolução de problemas com tecnologia</li>
+        <li>Ética no uso da tecnologia</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>O que torna essa formação diferente</h3>
+      <p>O aluno sai com <strong>portfólio</strong>, projetos desenvolvidos, capacidade de raciocinar sobre sistemas, visão de futuro e postura mais madura diante da tecnologia.</p>
+      <p style="margin-top:0.9rem;">A formação também atua diretamente na <strong>autoestima do jovem</strong>. Quando um adolescente consegue construir algo funcional — algo que resolve um problema real — a percepção que ele tem de si mesmo muda. Ele deixa de se ver apenas como aluno ou consumidor de tecnologia.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 7. ESTRUTURA DO PROGRAMA ════ -->
+<section id="estrutura">
+  <div class="reveal">
+    <p class="section-label">07 — Formato</p>
+    <h2 class="section-title">Estrutura do <span>Programa</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>Formato das Aulas</h3>
+      <p>As aulas são <strong>online e ao vivo</strong>, com três encontros por semana e uma hora por encontro. A aula deve ser bem conduzida, organizada e séria, com espaço para conteúdo, aplicação e construção. Cada encontro tem estrutura clara, ritmo adequado e objetivos definidos.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Lógica de Ancoragem dos Planos</h3>
+      <p>A apresentação dos planos segue uma lógica de ancoragem: o <strong>anual</strong> como visão completa, o <strong>semestral</strong> como plano recomendado e o <strong>trimestral</strong> como porta de entrada. Isso fortalece a percepção de valor e facilita a decisão do comprador.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 8. ESTRATÉGIA DE LANÇAMENTO ════ -->
+<section id="lancamento">
+  <div class="reveal">
+    <p class="section-label">08 — Go-to-Market</p>
+    <h2 class="section-title">Estratégia de <span>Lançamento</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">
+      O programa não deve ser vendido de forma direta desde o início. Antes de abrir matrícula, é preciso criar narrativa, desejo, autoridade e clareza de valor.
+    </p>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-content">
+        <h4>Conteúdo de Aquecimento</h4>
+        <p>Publicações sobre o futuro, a mudança da tecnologia e a importância de começar cedo. Essa fase cria o terreno emocional e racional para o que vem a seguir.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-content">
+        <h4>Workshop ao Vivo</h4>
+        <p>Encontro online com os pais — convencimento, clareza, demonstração e fechamento. Conduzido com profissionalismo e interação real.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-content">
+        <h4>Interação e Resposta de Objeções</h4>
+        <p>Espaço real de perguntas ao vivo. Os pais precisam sair com confiança, clareza e desejo de avançar.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">4</div>
+      <div class="phase-content">
+        <h4>Abertura das Matrículas</h4>
+        <p>Apresentação da turma, formatos disponíveis, vagas limitadas e o próximo passo para matrícula.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">5</div>
+      <div class="phase-content">
+        <h4>Fechamento da Turma</h4>
+        <p>Follow up com os pais interessados, resposta de dúvidas e fechamento. A conversão acontece aqui — e o timing é fundamental.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 9. WORKSHOP PARA PAIS ════ -->
+<section id="workshop">
+  <div class="reveal">
+    <p class="section-label">09 — Conversão</p>
+    <h2 class="section-title">Workshop para <span>Pais</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">
+      O workshop é a principal ferramenta de conversão do projeto. Ele deve funcionar como um encontro ao vivo de convencimento, clareza, demonstração e fechamento.
+    </p>
+  </div>
+
+  <div class="highlight reveal">
+    Ao final do workshop, os pais precisam pensar: <strong>"Isso é sério, isso faz sentido, isso pode mudar o futuro do meu filho, eu preciso considerar essa oportunidade."</strong>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.5rem;">
+    <div class="card reveal">
+      <h3>Formato</h3>
+      <p>Encontro <strong>online e ao vivo</strong>, com interação real, possibilidade de perguntas, botão de levantar a mão, chat aberto e moderação organizada. Plataforma recomendada: <strong>Zoom</strong>, por transmitir profissionalismo e facilitar dinâmica participativa.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Estrutura do Encontro</h3>
+      <div class="workshop-steps" style="margin-top:0.5rem;">
+        <div class="ws-step">
+          <div class="step-dot"></div>
+          <p><strong>Abertura:</strong> contexto, por que a IA não é moda e por que importa agora</p>
+        </div>
+        <div class="ws-step">
+          <div class="step-dot"></div>
+          <p><strong>Tese central:</strong> a lógica histórica da mudança e a vantagem competitiva da nova geração</p>
+        </div>
+        <div class="ws-step">
+          <div class="step-dot"></div>
+          <p><strong>Interação inicial:</strong> perguntas rápidas e enquetes para envolver os pais</p>
+        </div>
+        <div class="ws-step">
+          <div class="step-dot"></div>
+          <p><strong>Demonstração prática:</strong> agente, automação ou solução funcional ao vivo</p>
+        </div>
+        <div class="ws-step">
+          <div class="step-dot"></div>
+          <p><strong>Apresentação do programa</strong> e espaço real de perguntas</p>
+        </div>
+        <div class="ws-step">
+          <div class="step-dot"></div>
+          <p><strong>Fechamento:</strong> abertura da turma, formatos, vagas e próximo passo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 10 & 11. COMUNICAÇÃO ════ -->
+<section id="comunicacao">
+  <div class="reveal">
+    <p class="section-label">10 — Comunicação</p>
+    <h2 class="section-title">Comunicação para <span>Pais e Jovens</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>Comunicação para Pais</h3>
+      <p style="margin-bottom:0.8rem;">Linguagem <strong>séria, institucional, clara, segura e estratégica</strong>. A comunicação deve partir da percepção de futuro, urgência e oportunidade.</p>
+      <p style="margin-bottom:0.6rem;font-size:0.8rem;color:var(--subtle);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Temas mais fortes</p>
+      <ul class="content-list">
+        <li>Futuro profissional dos filhos</li>
+        <li>Vantagem competitiva</li>
+        <li>A falta de preparo da escola tradicional</li>
+        <li>A janela de oportunidade que existe agora</li>
+        <li>A seriedade da formação</li>
+      </ul>
+      <p style="margin-top:0.9rem;font-size:0.84rem;color:var(--muted);">Os vídeos para pais devem abordar o futuro do trabalho, a mudança provocada pela IA, o risco de ficar para trás e a diferença entre usar tecnologia e construir com ela.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Comunicação para Jovens</h3>
+      <p style="margin-bottom:0.8rem;">A linguagem com os jovens deve despertar <strong>identidade, ambição, curiosidade, vanguarda e diferenciação</strong>.</p>
+      <p style="margin-bottom:0.6rem;font-size:0.8rem;color:var(--subtle);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Temas mais fortes</p>
+      <ul class="content-list">
+        <li>Estar na frente, não ser comum</li>
+        <li>Criar em vez de só consumir</li>
+        <li>Aprender algo que poucos dominam</li>
+        <li>Fazer parte da nova geração da tecnologia</li>
+      </ul>
+      <p style="margin-top:0.9rem;font-size:0.84rem;color:var(--muted);">O tom certo é o que equilibra ousadia com credibilidade. Os vídeos devem provocar reflexões como: você vai só usar IA como todo mundo — ou vai aprender a criar com ela?</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 12 & 13. CONTEÚDO E CANAIS ════ -->
+<section id="canais">
+  <div class="reveal">
+    <p class="section-label">11 — Distribuição</p>
+    <h2 class="section-title">Conteúdo e <span>Canais</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card reveal">
+      <h3>Formatos de Conteúdo</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Reels</li>
+        <li>Carrosséis</li>
+        <li>Stories</li>
+        <li>Vídeos curtos de manifesto</li>
+        <li>Conteúdo de aquecimento para o workshop</li>
+      </ul>
+      <p style="margin-top:0.9rem;font-size:0.84rem;color:var(--muted);">Cada formato deve ser pensado com intencionalidade, tanto visual quanto narrativa.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Criativos Visuais</h3>
+      <ul class="content-list" style="margin-top:0.5rem;">
+        <li>Imagens institucionais com pais e filhos</li>
+        <li>Imagens de jovens em ambientes tecnológicos</li>
+        <li>Peças com linguagem forte sobre futuro, formação e liderança</li>
+      </ul>
+      <p style="margin-top:0.9rem;font-size:0.84rem;color:var(--muted);">O visual precisa transmitir seriedade sem perder acessibilidade.</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:1.2rem;">
+    <h3>Canais Principais</h3>
+    <div class="channel-list" style="margin-top:1rem;">
+      <div class="channel-item">
+        <span class="channel-name">Instagram</span>
+        <p>Canal principal de alcance e engajamento, com reels, carrosséis e stories para pais e jovens em diferentes momentos da jornada.</p>
+      </div>
+      <div class="channel-item">
+        <span class="channel-name">WhatsApp</span>
+        <p>Canal de relacionamento direto, follow up com leads qualificados e comunicação próxima com pais interessados.</p>
+      </div>
+      <div class="channel-item">
+        <span class="channel-name">YouTube</span>
+        <p>Canal de autoridade, profundidade e aproveitamento de conteúdos mais longos. Funciona como base de confiança para quem busca entender melhor o projeto antes de tomar uma decisão. Conteúdos mais didáticos, boa câmera, estilo cinematográfico e compilado de conteúdo com contexto de IA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 14. CAMPANHA ════ -->
+<section id="campanha">
+  <div class="reveal">
+    <p class="section-label">12 — Execução</p>
+    <h2 class="section-title">Estrutura da <span>Campanha</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-content">
+        <h4>Fase 1 — Aquecimento</h4>
+        <p>Conteúdo sobre o futuro, a mudança da tecnologia e a importância de começar cedo. Essa fase cria o terreno emocional e racional para o que vem a seguir.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-content">
+        <h4>Fase 2 — Captação</h4>
+        <p>Convite e captação para o workshop ao vivo com os pais. O objetivo é gerar inscrições qualificadas e presença confirmada.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-content">
+        <h4>Fase 3 — Workshop</h4>
+        <p>Realização do workshop com interação, perguntas, demonstração e fechamento. A experiência precisa ser forte o suficiente para gerar convicção nos pais.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">4</div>
+      <div class="phase-content">
+        <h4>Fase 4 — Follow Up</h4>
+        <p>Follow up com os pais interessados, resposta de dúvidas e abertura das matrículas. A conversão acontece aqui — e o timing é fundamental.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">5</div>
+      <div class="phase-content">
+        <h4>Fase 5 — Fechamento</h4>
+        <p>Fechamento da turma e início do onboarding. A turma começa com os alunos já engajados e os pais já comprometidos com o processo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════ 15. PLANOS ════ -->
+<section id="planos">
+  <div class="reveal">
+    <p class="section-label">13 — Oferta</p>
+    <h2 class="section-title">Planos de <span>Formação</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">
+      Os planos devem ser apresentados como formatos de jornada, cada um representando um nível diferente de compromisso e profundidade.
+    </p>
+  </div>
+
+  <div class="plans-grid reveal">
+    <div class="plan-card">
+      <span class="plan-badge" style="color:var(--subtle);">Entrada</span>
+      <h3>Trimestral</h3>
+      <p>Voltado para entrada e adaptação. Ideal para famílias que querem conhecer o programa antes de se comprometer com um ciclo mais longo. Funciona como porta de entrada.</p>
+    </div>
+    <div class="plan-card featured">
+      <span class="plan-badge">Recomendado</span>
+      <h3>Semestral</h3>
+      <p>Plano principal e mais recomendado. Oferece o melhor equilíbrio entre profundidade, resultado e previsibilidade. É o formato onde o aluno realmente começa a desenvolver portfólio e consistência.</p>
+      <span class="plan-rec">Plano Principal</span>
+    </div>
+    <div class="plan-card">
+      <span class="plan-badge" style="color:var(--subtle);">Completo</span>
+      <h3>Anual</h3>
+      <p>Plano mais completo, com visão de longo prazo, maior desenvolvimento e maior retenção. É a versão mais forte do programa, com percepção de profundidade, continuidade e transformação real.</p>
+    </div>
+  </div>
+
+  <div class="highlight reveal" style="margin-top:1.5rem;">
+    A apresentação comercial deve seguir a lógica: <strong>anual como visão completa → semestral como recomendado → trimestral como entrada.</strong> Essa ancoragem fortalece a percepção de valor e facilita a decisão do comprador.
+  </div>
+</section>
+
+<hr class="sep">
+
+<footer>
+  <strong>JOVEM BUILDER</strong> — Cultura Builder<br>
+  <span style="margin-top:0.3rem;display:inline-block;">Formando a primeira geração de construtores de IA da América Latina</span>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress').style.width = (window.scrollY / max * 100) + '%';
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
