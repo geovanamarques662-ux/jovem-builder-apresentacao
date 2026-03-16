@@ -6,17 +6,17 @@
   <title>Jovem Builder – Estrutura Completa do Programa</title>
   <style>
     :root {
-      --bg: #0a0a12;
-      --surface: #12121e;
-      --card: #1a1a2e;
-      --accent: #7c3aed;
-      --accent2: #06b6d4;
-      --accent3: #f59e0b;
-      --accent4: #10b981;
-      --accent5: #f43f5e;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --card: #1c2230;
+      --accent: #2563eb;
+      --accent2: #3b82f6;
+      --accent3: #64748b;
+      --accent4: #475569;
+      --accent5: #94a3b8;
       --text: #e2e8f0;
-      --muted: #94a3b8;
-      --border: rgba(124,58,237,0.18);
+      --muted: #8b9cb8;
+      --border: rgba(59,130,246,0.15);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,34 +30,13 @@
       overflow-x: hidden;
     }
 
-    /* ── PARTICLES ── */
-    #particles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0;
-      animation: float linear infinite;
-    }
-    @keyframes float {
-      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.3; }
-      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
-    }
-
     /* ── PROGRESS BAR ── */
     #progress {
       position: fixed;
       top: 0; left: 0;
-      height: 3px;
+      height: 2px;
       width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      background: var(--accent2);
       z-index: 1000;
       transition: width 0.1s;
     }
@@ -77,12 +56,11 @@
       z-index: 999;
     }
     nav .logo {
-      font-weight: 800;
-      font-size: 1rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
     nav ul {
       list-style: none;
@@ -132,12 +110,11 @@
       font-size: clamp(3rem, 9vw, 7rem);
       font-weight: 900;
       line-height: 1;
-      background: linear-gradient(135deg, #fff 0%, var(--accent2) 50%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffffff;
       margin-bottom: 0.5rem;
       opacity: 0;
       animation: fadeUp 0.8s 0.5s forwards;
+      letter-spacing: -0.02em;
     }
     #hero .subtitle {
       font-size: clamp(1rem, 2.5vw, 1.4rem);
@@ -162,10 +139,10 @@
       font-weight: 600;
       letter-spacing: 0.04em;
     }
-    .pill-purple { background: rgba(124,58,237,0.18); border: 1px solid rgba(124,58,237,0.4); color: #c4b5fd; }
-    .pill-cyan   { background: rgba(6,182,212,0.13);  border: 1px solid rgba(6,182,212,0.35); color: #67e8f9; }
-    .pill-amber  { background: rgba(245,158,11,0.13); border: 1px solid rgba(245,158,11,0.35); color: #fcd34d; }
-    .pill-green  { background: rgba(16,185,129,0.13); border: 1px solid rgba(16,185,129,0.35); color: #6ee7b7; }
+    .pill-purple { background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.35); color: #93c5fd; }
+    .pill-cyan   { background: rgba(37,99,235,0.10); border: 1px solid rgba(59,130,246,0.25); color: #bfdbfe; }
+    .pill-amber  { background: rgba(71,85,105,0.2);  border: 1px solid rgba(100,116,139,0.4); color: #cbd5e1; }
+    .pill-green  { background: rgba(71,85,105,0.15); border: 1px solid rgba(100,116,139,0.3); color: #e2e8f0; }
 
     .scroll-hint {
       position: absolute;
@@ -208,9 +185,7 @@
       margin-bottom: 0.5rem;
     }
     .section-title span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent2);
     }
     .section-desc {
       color: var(--muted);
@@ -222,11 +197,12 @@
 
     /* ── DIVIDER ── */
     .divider {
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: 2px;
+      width: 48px;
+      height: 2px;
+      background: var(--accent2);
+      border-radius: 1px;
       margin-bottom: 1.5rem;
+      opacity: 0.7;
     }
 
     /* ── CARDS ── */
@@ -238,8 +214,9 @@
       transition: transform 0.25s, box-shadow 0.25s;
     }
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(124,58,237,0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+      border-color: rgba(59,130,246,0.3);
     }
 
     /* ── OVERVIEW GRID ── */
@@ -357,9 +334,7 @@
     .stat-num {
       font-size: 2.4rem;
       font-weight: 900;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #93c5fd;
       line-height: 1;
     }
     .stat-label {
@@ -372,8 +347,8 @@
     .summary-text {
       background: var(--card);
       border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: 12px;
+      border-left: 3px solid var(--accent2);
+      border-radius: 8px;
       padding: 1.5rem 1.8rem;
       font-size: 0.93rem;
       color: var(--muted);
@@ -384,8 +359,8 @@
 
     /* ── CERTIF ── */
     .certif-box {
-      background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));
-      border: 1px solid rgba(124,58,237,0.3);
+      background: rgba(37,99,235,0.08);
+      border: 1px solid rgba(59,130,246,0.25);
       border-radius: 16px;
       padding: 2rem;
       display: flex;
@@ -429,28 +404,24 @@
     /* ── GLOW LINE ── */
     .glow-line {
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent);
       margin: 0 auto 4rem;
-      opacity: 0.4;
     }
 
     /* color helpers */
-    .c-purple { color: #c4b5fd; }
-    .c-cyan   { color: #67e8f9; }
-    .c-amber  { color: #fcd34d; }
-    .c-green  { color: #6ee7b7; }
-    .c-rose   { color: #fb7185; }
+    .c-purple { color: #93c5fd; }
+    .c-cyan   { color: #bfdbfe; }
+    .c-amber  { color: #cbd5e1; }
+    .c-green  { color: #e2e8f0; }
+    .c-rose   { color: #94a3b8; }
 
-    .bg-purple { background: rgba(124,58,237,0.18); }
-    .bg-cyan   { background: rgba(6,182,212,0.15); }
-    .bg-amber  { background: rgba(245,158,11,0.15); }
-    .bg-green  { background: rgba(16,185,129,0.15); }
+    .bg-purple { background: rgba(37,99,235,0.15); }
+    .bg-cyan   { background: rgba(59,130,246,0.12); }
+    .bg-amber  { background: rgba(71,85,105,0.2); }
+    .bg-green  { background: rgba(71,85,105,0.15); }
   </style>
 </head>
 <body>
-
-<!-- Particles -->
-<div id="particles"></div>
 
 <!-- Progress bar -->
 <div id="progress"></div>
@@ -504,26 +475,26 @@
 
   <div class="overview-grid">
     <div class="card overview-card reveal">
-      <h3><span class="icon bg-purple" style="font-size:1.1rem">🧠</span> Ferramentas Principais</h3>
+      <h3><span class="icon bg-purple" style="font-size:0.7rem;font-weight:800;color:#93c5fd;">01</span> Ferramentas Principais</h3>
       <p>Os alunos trabalham com o <strong>Claude</strong> e o <strong>OpenClaw</strong> como ferramentas centrais da formação.
       O Claude é o ponto de partida: os jovens aprendem a se comunicar com a IA, a construir prompts eficientes e a usar
       a ferramenta como aliada intelectual. O OpenClaw entra como ambiente de construção, onde os alunos criam automações,
       agentes e integrações de forma visual e funcional.</p>
     </div>
     <div class="card overview-card reveal">
-      <h3><span class="icon bg-cyan" style="font-size:1.1rem">📈</span> Progressão de Dificuldade</h3>
+      <h3><span class="icon bg-cyan" style="font-size:0.7rem;font-weight:800;color:#93c5fd;">02</span> Progressão de Dificuldade</h3>
       <p>A lógica do programa segue uma curva clara de complexidade. O primeiro módulo parte da vida do próprio aluno.
       A partir do segundo módulo, o foco se expande para setores reais da economia, até integrações multi-sistema
       no quarto módulo. Ao final do ano, o jovem tem experiência prática em múltiplos setores.</p>
     </div>
     <div class="card overview-card reveal">
-      <h3><span class="icon bg-amber" style="font-size:1.1rem">🏆</span> Certificação</h3>
+      <h3><span class="icon bg-amber" style="font-size:0.7rem;font-weight:800;color:#93c5fd;">03</span> Certificação</h3>
       <p>O certificado de conclusão exige a entrega de um <strong>portfólio completo</strong> com todos os projetos
       desenvolvidos ao longo do ano, além da <strong>defesa do projeto final</strong> perante uma banca avaliadora.
       Essa exigência garante que o certificado represente capacidade real de execução.</p>
     </div>
     <div class="card overview-card reveal">
-      <h3><span class="icon bg-green" style="font-size:1.1rem">⚡</span> Sistemas Inteligentes</h3>
+      <h3><span class="icon bg-green" style="font-size:0.7rem;font-weight:800;color:#93c5fd;">04</span> Sistemas Inteligentes</h3>
       <p>A proposta central da formação é que os jovens aprendam a criar <strong>sistemas inteligentes que aprendem
       com o tempo</strong>. Sistemas que coletam dados, cruzam informações, identificam padrões, antecipam problemas
       e melhoram suas próprias respostas à medida que acumulam histórico de operação.</p>
@@ -544,7 +515,7 @@
   <div class="info-grid">
     <div class="card reveal">
       <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:1.3rem">🎥</span> Plataforma
+        Plataforma
       </h3>
       <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;">
         Todas as aulas acontecem via <strong style="color:var(--text)">Zoom</strong>. A escolha se justifica pela qualidade
@@ -557,7 +528,7 @@
 
     <div class="card reveal">
       <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:1.3rem">🕐</span> Dinâmica de Cada Aula (1h30)
+        Dinâmica de Cada Aula (1h30)
       </h3>
       <div style="display:flex;flex-direction:column;gap:0.8rem;font-size:0.86rem;">
         <div style="display:flex;gap:0.75rem;align-items:flex-start;">
@@ -842,7 +813,6 @@
   </div>
 
   <div class="certif-box reveal">
-    <span class="big-icon">🎓</span>
     <div>
       <h3>Certificação por Portfólio</h3>
       <p>
@@ -862,25 +832,6 @@
 
 <!-- ════════ SCRIPTS ════════ -->
 <script>
-  // Particles
-  (function() {
-    const container = document.getElementById('particles');
-    const colors = ['#7c3aed','#06b6d4','#f59e0b','#10b981','#f43f5e'];
-    for (let i = 0; i < 30; i++) {
-      const p = document.createElement('div');
-      p.classList.add('particle');
-      const size = Math.random() * 6 + 2;
-      p.style.cssText = `
-        width:${size}px;height:${size}px;
-        left:${Math.random()*100}%;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
-        animation-duration:${Math.random()*20+12}s;
-        animation-delay:${Math.random()*15}s;
-      `;
-      container.appendChild(p);
-    }
-  })();
-
   // Progress bar
   window.addEventListener('scroll', () => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
