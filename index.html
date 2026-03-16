@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jovem Builder – Estrutura Completa do Programa</title>
+  <style>
+    :root {
+      --bg: #0a0a12;
+      --surface: #12121e;
+      --card: #1a1a2e;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --accent3: #f59e0b;
+      --accent4: #10b981;
+      --accent5: #f43f5e;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: rgba(124,58,237,0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── PARTICLES ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    }
+
+    /* ── PROGRESS BAR ── */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 1000;
+      transition: width 0.1s;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 3px; left: 0; right: 0;
+      height: 56px;
+      background: rgba(10,10,18,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 999;
+    }
+    nav .logo {
+      font-weight: 800;
+      font-size: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.05em;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent2); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 1.5rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      max-width: 100%;
+      padding-top: 56px;
+    }
+    #hero .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+    #hero h1 {
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, var(--accent2) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+    #hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 640px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s forwards;
+    }
+    .pill {
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .pill-purple { background: rgba(124,58,237,0.18); border: 1px solid rgba(124,58,237,0.4); color: #c4b5fd; }
+    .pill-cyan   { background: rgba(6,182,212,0.13);  border: 1px solid rgba(6,182,212,0.35); color: #67e8f9; }
+    .pill-amber  { background: rgba(245,158,11,0.13); border: 1px solid rgba(245,158,11,0.35); color: #fcd34d; }
+    .pill-green  { background: rgba(16,185,129,0.13); border: 1px solid rgba(16,185,129,0.35); color: #6ee7b7; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint svg { width: 20px; opacity: 0.5; }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 700px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(124,58,237,0.15);
+    }
+
+    /* ── OVERVIEW GRID ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .overview-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .overview-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── MODULES ── */
+    .module-block {
+      margin-bottom: 3.5rem;
+    }
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .module-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .module-meta { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+    .module-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      padding-left: 68px;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    thead tr {
+      background: rgba(124,58,237,0.12);
+    }
+    thead th {
+      padding: 0.9rem 1.1rem;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-top: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    td { padding: 0.85rem 1.1rem; color: var(--muted); line-height: 1.5; vertical-align: top; }
+    td:first-child {
+      color: var(--accent2);
+      font-weight: 700;
+      white-space: nowrap;
+      width: 80px;
+    }
+    td:nth-child(2) { color: var(--text); font-weight: 600; }
+
+    /* ── SUMMARY ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      letter-spacing: 0.04em;
+    }
+
+    .summary-text {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 1.5rem 1.8rem;
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+    }
+    .summary-text strong { color: var(--text); }
+
+    /* ── CERTIF ── */
+    .certif-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .certif-box .big-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .certif-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .certif-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PLATFORM / DYNAMIC ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+    footer strong { color: var(--text); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── GLOW LINE ── */
+    .glow-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+      margin: 0 auto 4rem;
+      opacity: 0.4;
+    }
+
+    /* color helpers */
+    .c-purple { color: #c4b5fd; }
+    .c-cyan   { color: #67e8f9; }
+    .c-amber  { color: #fcd34d; }
+    .c-green  { color: #6ee7b7; }
+    .c-rose   { color: #fb7185; }
+
+    .bg-purple { background: rgba(124,58,237,0.18); }
+    .bg-cyan   { background: rgba(6,182,212,0.15); }
+    .bg-amber  { background: rgba(245,158,11,0.15); }
+    .bg-green  { background: rgba(16,185,129,0.15); }
+  </style>
+</head>
+<body>
+
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- Progress bar -->
+<div id="progress"></div>
+
+<!-- Nav -->
+<nav>
+  <span class="logo">JOVEM BUILDER</span>
+  <ul>
+    <li><a href="#visao">Visão Geral</a></li>
+    <li><a href="#plataforma">Plataforma</a></li>
+    <li><a href="#modulo1">Módulo 1</a></li>
+    <li><a href="#modulo2">Módulo 2</a></li>
+    <li><a href="#modulo3">Módulo 3</a></li>
+    <li><a href="#modulo4">Módulo 4</a></li>
+    <li><a href="#resumo">Resumo</a></li>
+  </ul>
+</nav>
+
+<!-- ════════ HERO ════════ -->
+<section id="hero">
+  <p class="eyebrow">Formação Anual em Inteligência Artificial para Jovens</p>
+  <h1>JOVEM<br>BUILDER</h1>
+  <p class="subtitle">Estrutura Completa do Programa</p>
+  <div class="pill-row">
+    <span class="pill pill-purple">4 Módulos</span>
+    <span class="pill pill-cyan">48 Semanas</span>
+    <span class="pill pill-amber">144 Aulas ao Vivo</span>
+    <span class="pill pill-green">Certificação por Portfólio</span>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    scroll
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ VISÃO GERAL ════════ -->
+<section id="visao">
+  <div class="reveal">
+    <p class="section-label">01 — Estrutura</p>
+    <h2 class="section-title">Visão Geral da <span>Estrutura</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">
+      O programa Jovem Builder está organizado em 4 módulos de 12 semanas cada, totalizando 48 semanas de formação.
+      São 3 aulas por semana, com 1 hora e 30 minutos cada, sempre ao vivo, com o aluno construindo junto com o instrutor
+      em tempo real. Ao longo do ano, o jovem acumula 144 aulas e constrói um portfólio completo de projetos que funciona
+      como requisito para a certificação final.
+    </p>
+  </div>
+
+  <div class="overview-grid">
+    <div class="card overview-card reveal">
+      <h3><span class="icon bg-purple" style="font-size:1.1rem">🧠</span> Ferramentas Principais</h3>
+      <p>Os alunos trabalham com o <strong>Claude</strong> e o <strong>OpenClaw</strong> como ferramentas centrais da formação.
+      O Claude é o ponto de partida: os jovens aprendem a se comunicar com a IA, a construir prompts eficientes e a usar
+      a ferramenta como aliada intelectual. O OpenClaw entra como ambiente de construção, onde os alunos criam automações,
+      agentes e integrações de forma visual e funcional.</p>
+    </div>
+    <div class="card overview-card reveal">
+      <h3><span class="icon bg-cyan" style="font-size:1.1rem">📈</span> Progressão de Dificuldade</h3>
+      <p>A lógica do programa segue uma curva clara de complexidade. O primeiro módulo parte da vida do próprio aluno.
+      A partir do segundo módulo, o foco se expande para setores reais da economia, até integrações multi-sistema
+      no quarto módulo. Ao final do ano, o jovem tem experiência prática em múltiplos setores.</p>
+    </div>
+    <div class="card overview-card reveal">
+      <h3><span class="icon bg-amber" style="font-size:1.1rem">🏆</span> Certificação</h3>
+      <p>O certificado de conclusão exige a entrega de um <strong>portfólio completo</strong> com todos os projetos
+      desenvolvidos ao longo do ano, além da <strong>defesa do projeto final</strong> perante uma banca avaliadora.
+      Essa exigência garante que o certificado represente capacidade real de execução.</p>
+    </div>
+    <div class="card overview-card reveal">
+      <h3><span class="icon bg-green" style="font-size:1.1rem">⚡</span> Sistemas Inteligentes</h3>
+      <p>A proposta central da formação é que os jovens aprendam a criar <strong>sistemas inteligentes que aprendem
+      com o tempo</strong>. Sistemas que coletam dados, cruzam informações, identificam padrões, antecipam problemas
+      e melhoram suas próprias respostas à medida que acumulam histórico de operação.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ PLATAFORMA & DINÂMICA ════════ -->
+<section id="plataforma">
+  <div class="reveal">
+    <p class="section-label">02 — Metodologia</p>
+    <h2 class="section-title">Plataforma e <span>Dinâmica</span> das Aulas</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="info-grid">
+    <div class="card reveal">
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1.3rem">🎥</span> Plataforma
+      </h3>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;">
+        Todas as aulas acontecem via <strong style="color:var(--text)">Zoom</strong>. A escolha se justifica pela qualidade
+        superior no compartilhamento de tela com baixa latência (essencial para aulas práticas onde o aluno replica o que
+        o instrutor faz), pelo controle granular de áudio dos participantes, pelo modo <em>spotlight</em> que fixa a tela
+        do instrutor durante demonstrações, pela sala de espera para controle de entrada, e pelos <em>breakout rooms</em>
+        para atividades em grupo.
+      </p>
+    </div>
+
+    <div class="card reveal">
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1.3rem">🕐</span> Dinâmica de Cada Aula (1h30)
+      </h3>
+      <div style="display:flex;flex-direction:column;gap:0.8rem;font-size:0.86rem;">
+        <div style="display:flex;gap:0.75rem;align-items:flex-start;">
+          <span style="background:rgba(124,58,237,0.2);border-radius:6px;padding:0.2rem 0.6rem;font-weight:700;color:#c4b5fd;white-space:nowrap;">15–20 min</span>
+          <span style="color:var(--muted);line-height:1.55;"><strong style="color:var(--text)">Contexto:</strong> o instrutor explica o que será construído, por que aquilo importa e como se conecta ao que já foi aprendido.</span>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:flex-start;">
+          <span style="background:rgba(6,182,212,0.15);border-radius:6px;padding:0.2rem 0.6rem;font-weight:700;color:#67e8f9;white-space:nowrap;">50–60 min</span>
+          <span style="color:var(--muted);line-height:1.55;"><strong style="color:var(--text)">Prática:</strong> o instrutor constrói ao vivo e os alunos acompanham, replicando cada passo na própria tela.</span>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:flex-start;">
+          <span style="background:rgba(16,185,129,0.13);border-radius:6px;padding:0.2rem 0.6rem;font-weight:700;color:#6ee7b7;white-space:nowrap;">10–15 min</span>
+          <span style="color:var(--muted);line-height:1.55;"><strong style="color:var(--text)">Revisão:</strong> revisão do que foi construído, dúvidas e orientação sobre a próxima aula.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ MÓDULO 1 ════════ -->
+<section id="modulo1">
+  <div class="reveal">
+    <p class="section-label">03 — Formação</p>
+    <h2 class="section-title">Módulo 1 – <span>Fundamentos e Vida Pessoal</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="module-block">
+    <div class="module-header reveal">
+      <div class="module-num bg-purple c-purple" style="font-size:1.6rem;">1</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;">Fundamentos e Vida Pessoal</div>
+        <div class="module-meta">Semanas 1 a 12 · 36 aulas · 54 horas</div>
+      </div>
+    </div>
+    <p class="module-desc reveal">
+      Na primeira semana, o aluno entende o que é IA, aprende a escrever prompts eficientes e vê exemplos reais de como
+      isso gera valor. Na segunda semana, já está dentro do OpenClaw construindo. A partir daí, cada semana é um projeto
+      prático voltado para a própria vida do aluno: estudos, organização, saúde, criatividade, problemas familiares.
+      O jovem sai do módulo com confiança, domínio das ferramentas e um portfólio de soluções que ele mesmo usa no dia a dia.
+    </p>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th>Tema</th>
+            <th>Prática ao Vivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>IA na prática: o que é, como usar e por que isso vale dinheiro</td><td>Primeiro contato com o Claude: como escrever prompts certos, explorar limites, e ver exemplos reais de pessoas e empresas lucrando com IA</td></tr>
+          <tr><td>2</td><td>Primeiros passos no OpenClaw</td><td>Conhecer a plataforma, entender a lógica visual e criar a primeira automação funcional do zero</td></tr>
+          <tr><td>3</td><td>Construindo para a escola</td><td>Criar no OpenClaw um assistente de estudos que gera resumos e questões a partir de qualquer matéria</td></tr>
+          <tr><td>4</td><td>Organização pessoal automatizada</td><td>Montar um planejador semanal inteligente que organiza tarefas, provas e atividades</td></tr>
+          <tr><td>5</td><td>Assistente de rotina e saúde</td><td>Construir uma automação que monta treinos, cardápios ou rotinas de hábitos saudáveis</td></tr>
+          <tr><td>6</td><td>Criatividade com IA</td><td>Criar uma ferramenta que gera textos, roteiros, ideias para projetos escolares ou conteúdos pessoais</td></tr>
+          <tr><td>7</td><td>Conectando automações</td><td>Integrar dois fluxos no OpenClaw: a saída de um alimenta a entrada do outro</td></tr>
+          <tr><td>8</td><td>Resolvendo um problema real</td><td>Identificar um problema pessoal ou familiar e construir uma solução completa com IA</td></tr>
+          <tr><td>9</td><td>Soluções para a família</td><td>Criar uma automação útil para alguém da família: controle financeiro, lembretes, organização</td></tr>
+          <tr><td>10</td><td>Projeto livre com escopo definido</td><td>Cada aluno escolhe um problema do dia a dia e constrói a solução com autonomia, usando tudo que aprendeu</td></tr>
+          <tr><td>11</td><td>Refinamento e melhoria</td><td>Revisar e melhorar todos os projetos construídos, aplicando feedbacks do instrutor</td></tr>
+          <tr><td>12</td><td>Apresentação do portfólio pessoal</td><td>Cada aluno apresenta seus projetos do módulo para a turma</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ MÓDULO 2 ════════ -->
+<section id="modulo2">
+  <div class="reveal">
+    <p class="section-label">04 — Formação</p>
+    <h2 class="section-title">Módulo 2 – <span>Saúde, Educação e Varejo</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="module-block">
+    <div class="module-header reveal">
+      <div class="module-num bg-cyan c-cyan" style="font-size:1.6rem;">2</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;">Saúde, Educação e Varejo</div>
+        <div class="module-meta">Semanas 13 a 24 · 36 aulas · 54 horas</div>
+      </div>
+    </div>
+    <p class="module-desc reveal">
+      Com a base consolidada, o aluno começa a construir soluções para setores reais. A saúde abre o módulo por ser um
+      dos setores onde a IA gera mais impacto visível: agendamento, triagem, atendimento. A educação conecta com a
+      realidade do próprio aluno, agora vista pelo lado de quem constrói ferramentas para ensinar. O varejo fecha o
+      módulo como um dos setores mais relevantes da economia brasileira, com desafios de atendimento e personalização
+      que os alunos resolvem na prática.
+    </p>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th>Tema</th>
+            <th>Prática ao Vivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Como a IA transforma a saúde</td><td>Mapear processos de uma clínica e identificar onde a IA pode atuar</td></tr>
+          <tr><td>2</td><td>Agendamento inteligente</td><td>Construir um sistema de agendamento automatizado para uma clínica fictícia</td></tr>
+          <tr><td>3</td><td>Triagem e atendimento inicial</td><td>Criar um assistente de pré-atendimento que coleta sintomas e direciona o paciente</td></tr>
+          <tr><td>4</td><td>Projeto integrado de saúde</td><td>Conectar agendamento + triagem em um fluxo funcional completo</td></tr>
+          <tr><td>5</td><td>IA na educação</td><td>Construir um tutor inteligente que adapta explicações ao nível do aluno</td></tr>
+          <tr><td>6</td><td>Correção e feedback automatizado</td><td>Criar um sistema que corrige respostas e dá feedback personalizado</td></tr>
+          <tr><td>7</td><td>Projeto integrado de educação</td><td>Montar uma plataforma simplificada de apoio escolar com IA</td></tr>
+          <tr><td>8</td><td>IA no varejo e comércio</td><td>Construir um atendente virtual para uma loja fictícia</td></tr>
+          <tr><td>9</td><td>Recomendação de produtos</td><td>Criar um sistema de sugestão inteligente baseado no perfil do cliente</td></tr>
+          <tr><td>10</td><td>Projeto integrado de varejo</td><td>Conectar atendimento + recomendação em um fluxo de venda completo</td></tr>
+          <tr><td>11</td><td>Comparação entre setores</td><td>Analisar padrões comuns e diferenças entre as soluções construídas</td></tr>
+          <tr><td>12</td><td>Apresentação dos projetos setoriais</td><td>Cada aluno apresenta o projeto que mais evoluiu no módulo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ MÓDULO 3 ════════ -->
+<section id="modulo3">
+  <div class="reveal">
+    <p class="section-label">05 — Formação</p>
+    <h2 class="section-title">Módulo 3 – <span>Indústria, Agronegócio e Serviços</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="module-block">
+    <div class="module-header reveal">
+      <div class="module-num bg-amber c-amber" style="font-size:1.6rem;">3</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;">Indústria, Agronegócio e Serviços</div>
+        <div class="module-meta">Semanas 25 a 36 · 36 aulas · 54 horas</div>
+      </div>
+    </div>
+    <p class="module-desc reveal">
+      O terceiro módulo eleva a complexidade de forma significativa. Na parte industrial, o aluno aprende a conectar
+      sensores de temperatura, pressão e vibração de máquinas pesadas a sistemas inteligentes de monitoramento,
+      incluindo a integração de equipamentos legados (CLPs, sistemas SCADA) com plataformas modernas de IA. O foco é
+      cruzar dados de múltiplas fontes, identificar gargalos, antecipar falhas e gerar diagnósticos automatizados.
+      O agronegócio traz desafios estratégicos para o Brasil, com gestão de clima, insumos e logística integrados
+      em um único painel. Os serviços profissionais fecham o módulo com automação de relatórios e análise de dados,
+      competências aplicáveis a qualquer carreira futura.
+    </p>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th>Tema</th>
+            <th>Prática ao Vivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>IA na indústria: visão geral</td><td>Mapear uma linha de produção industrial, identificar gargalos e entender onde sensores e IA se encaixam</td></tr>
+          <tr><td>2</td><td>Sensoriamento e coleta de dados</td><td>Conectar sensores de temperatura, pressão e vibração de máquinas pesadas a um sistema inteligente de leitura em tempo real</td></tr>
+          <tr><td>3</td><td>Integrando equipamentos legados</td><td>Criar uma ponte de dados entre uma máquina industrial robusta (CLP/SCADA) e um sistema moderno de monitoramento com IA</td></tr>
+          <tr><td>4</td><td>Cruzamento de dados e diagnóstico</td><td>Construir um sistema que cruza dados de múltiplos sensores, identifica padrões de falha e sugere ações corretivas</td></tr>
+          <tr><td>5</td><td>Manutenção preditiva</td><td>Criar alertas automatizados que antecipam quebras com base no histórico de operação da máquina</td></tr>
+          <tr><td>6</td><td>Painel industrial integrado</td><td>Montar um dashboard funcional que consolida sensores + diagnóstico + alertas + relatórios automáticos</td></tr>
+          <tr><td>7</td><td>IA no agronegócio</td><td>Construir um assistente que analisa dados climáticos, de solo e safra para recomendar ações</td></tr>
+          <tr><td>8</td><td>Gestão de insumos e logística</td><td>Criar um controlador inteligente de estoque e distribuição com otimização automática</td></tr>
+          <tr><td>9</td><td>Projeto integrado agro</td><td>Montar um painel de gestão agrícola que cruza clima, insumos e logística em um único sistema</td></tr>
+          <tr><td>10</td><td>IA para escritórios e consultorias</td><td>Construir um fluxo completo: coleta de dados + análise automática + relatório profissional gerado por IA</td></tr>
+          <tr><td>11</td><td>Robustez e tratamento de erros</td><td>Adicionar validações, fallbacks e camadas de segurança a todos os projetos do módulo</td></tr>
+          <tr><td>12</td><td>Apresentação dos projetos avançados</td><td>Defesa dos projetos com perguntas da turma e do instrutor</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ MÓDULO 4 ════════ -->
+<section id="modulo4">
+  <div class="reveal">
+    <p class="section-label">06 — Formação</p>
+    <h2 class="section-title">Módulo 4 – <span>Integrações Complexas e Projeto Final</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="module-block">
+    <div class="module-header reveal">
+      <div class="module-num bg-green c-green" style="font-size:1.6rem;">4</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;">Integrações Complexas e Projeto Final</div>
+        <div class="module-meta">Semanas 37 a 48 · 36 aulas · 54 horas</div>
+      </div>
+    </div>
+    <p class="module-desc reveal">
+      O módulo final é onde tudo se conecta. O aluno aprende a trabalhar com sistemas multi-camada, APIs, agentes
+      autônomos e orquestração de múltiplos agentes. Na segunda metade, cada aluno escolhe um problema real, define
+      escopo e setor, projeta a arquitetura completa e constrói a solução do zero. O módulo encerra com a organização
+      do portfólio anual e a apresentação formal do projeto final perante banca avaliadora, como requisito para a
+      certificação.
+    </p>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th>Tema</th>
+            <th>Prática ao Vivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Sistemas multi-camada</td><td>Entender e mapear arquiteturas com múltiplos sistemas conectados</td></tr>
+          <tr><td>2</td><td>APIs e comunicação entre sistemas</td><td>Construir uma integração real entre duas plataformas via API</td></tr>
+          <tr><td>3</td><td>Agentes autônomos</td><td>Criar um agente de IA que toma decisões e executa ações em sequência</td></tr>
+          <tr><td>4</td><td>Orquestração de agentes</td><td>Conectar múltiplos agentes que colaboram para resolver um problema complexo</td></tr>
+          <tr><td>5</td><td>Escolha do projeto final</td><td>Definir escopo, setor e problema real que o projeto final vai resolver</td></tr>
+          <tr><td>6</td><td>Arquitetura do projeto final</td><td>Desenhar a estrutura completa: fluxos, integrações, entradas e saídas</td></tr>
+          <tr><td>7</td><td>Construção do projeto final (parte 1)</td><td>Desenvolvimento ao vivo com acompanhamento individual do instrutor</td></tr>
+          <tr><td>8</td><td>Construção do projeto final (parte 2)</td><td>Continuação do desenvolvimento com testes e ajustes</td></tr>
+          <tr><td>9</td><td>Construção do projeto final (parte 3)</td><td>Refinamento, tratamento de erros e documentação</td></tr>
+          <tr><td>10</td><td>Preparação do portfólio</td><td>Organizar todos os projetos do ano em um portfólio profissional</td></tr>
+          <tr><td>11</td><td>Ensaio da apresentação final</td><td>Simulação da apresentação com feedback do instrutor e da turma</td></tr>
+          <tr><td>12</td><td>Apresentação final e certificação</td><td>Defesa do projeto final e do portfólio completo perante banca avaliadora</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line" style="max-width:800px;"></div>
+
+<!-- ════════ RESUMO ANUAL ════════ -->
+<section id="resumo">
+  <div class="reveal">
+    <p class="section-label">07 — Resultados</p>
+    <h2 class="section-title">Resumo <span>Anual</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="summary-grid reveal">
+    <div class="stat-card">
+      <div class="stat-num">144</div>
+      <div class="stat-label">Aulas ao vivo</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">216h</div>
+      <div class="stat-label">Horas de formação prática</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">48</div>
+      <div class="stat-label">Semanas de formação</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Módulos completos</div>
+    </div>
+  </div>
+
+  <div class="summary-text reveal">
+    Ao final dos 4 módulos, o aluno terá completado <strong>144 aulas ao vivo</strong>, somando
+    <strong>216 horas de formação prática</strong>. O portfólio acumulado inclui projetos pessoais, soluções setoriais
+    para saúde, educação, varejo, indústria, agronegócio e serviços profissionais, integrações com sensores e
+    equipamentos industriais, conexões complexas entre sistemas e um <strong>projeto final de autoria própria</strong>.
+  </div>
+
+  <div class="summary-text reveal">
+    Esse jovem sai do programa com <strong>maturidade tecnológica</strong>, <strong>capacidade de execução comprovada</strong>
+    e um portfólio que demonstra habilidade real de construir com Inteligência Artificial para setores diversos da economia.
+  </div>
+
+  <div class="summary-text reveal">
+    A proposta central da formação é que os jovens aprendam a criar <strong>sistemas inteligentes que aprendem com o
+    tempo</strong>. Sistemas que coletam dados, cruzam informações, identificam padrões, antecipam problemas e melhoram
+    suas próprias respostas à medida que acumulam histórico de operação.
+  </div>
+
+  <div class="certif-box reveal">
+    <span class="big-icon">🎓</span>
+    <div>
+      <h3>Certificação por Portfólio</h3>
+      <p>
+        O certificado de conclusão exige a entrega de um portfólio completo com todos os projetos desenvolvidos ao longo
+        do ano, além da defesa do projeto final perante uma banca avaliadora. Essa exigência garante que o certificado
+        represente <strong>capacidade real de execução</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <strong>JOVEM BUILDER</strong> — Formação Anual em Inteligência Artificial para Jovens<br>
+  <span style="margin-top:0.4rem;display:inline-block;opacity:0.5;">4 Módulos · 48 Semanas · 144 Aulas · Certificação por Portfólio</span>
+</footer>
+
+<!-- ════════ SCRIPTS ════════ -->
+<script>
+  // Particles
+  (function() {
+    const container = document.getElementById('particles');
+    const colors = ['#7c3aed','#06b6d4','#f59e0b','#10b981','#f43f5e'];
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 6 + 2;
+      p.style.cssText = `
+        width:${size}px;height:${size}px;
+        left:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-duration:${Math.random()*20+12}s;
+        animation-delay:${Math.random()*15}s;
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress').style.width = (window.scrollY / max * 100) + '%';
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
